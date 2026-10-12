@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Pseudocode Quest is a classroom game for learning algorithms, inputs, outputs and tracing.">
+  <title>Pseudocode Quest</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <header class="topbar">
+    <button class="brand" id="homeBtn" aria-label="Return to mission map">
+      <span class="brand-icon">&lt;/&gt;</span>
+      <span>PSEUDOCODE <b>QUEST</b></span>
+    </button>
+    <div class="hud">
+      <span class="hud-chip" title="Experience points">⚡ <b id="xpText">0 XP</b></span>
+      <span class="hud-chip" title="Completed levels">★ <b id="starText">0/27</b></span>
+      <button class="sound-btn" id="soundBtn" aria-label="Toggle sound">🔊</button>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <template id="mapTemplate">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">YEAR 8 ALGORITHM TRAINING</p>
+        <h1>Train the robot.<br><span>Think like a coder.</span></h1>
+        <p>Complete short missions using precise steps, inputs, outputs and traces. Every answer gives instant feedback.</p>
+      </div>
+      <div class="robot-wrap" aria-label="Pixel robot mascot">
+        <div class="speech">Ready for a mission?</div>
+        <div class="robot"><div class="antenna"></div><div class="face"><i></i><i></i></div><div class="body">01</div></div>
+      </div>
+    </section>
+    <section class="map-head">
+      <div><p class="eyebrow">MISSION MAP</p><h2>All training missions</h2></div>
+      <div class="progress-wrap"><span id="mapProgressLabel">0 of 9 cleared</span><div class="progress"><i id="mapProgressBar"></i></div></div>
+    </section>
+    <section class="level-grid" id="levelGrid"></section>
+    <section class="coming">
+      <p class="eyebrow">OPEN CHALLENGE PATHWAY</p>
+      <h2>Levels 7–9 are available now</h2>
+      <p>Students may continue into decisions, loops and algorithm design whenever they are ready.</p>
+    </section>
+  </template>
+
+  <template id="gameTemplate">
+    <section class="game-shell">
+      <nav class="game-nav">
+        <button class="back-btn" id="backBtn">← Mission map</button>
+        <div><span id="levelTag"></span><div class="question-dots" id="questionDots"></div></div>
+      </nav>
+      <div class="mission-title"><span id="missionIcon"></span><div><p class="eyebrow" id="missionSkill"></p><h1 id="missionName"></h1></div></div>
+      <article class="challenge-card">
+        <div class="prompt-row"><span class="prompt-number" id="promptNumber"></span><div><p class="eyebrow">YOUR MISSION</p><h2 id="promptText"></h2></div></div>
+        <div id="challengeArea"></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+        <div class="actions"><button class="secondary" id="resetBtn">Reset</button><button class="primary" id="checkBtn">Check answer</button></div>
+      </article>
+      <p class="tip" id="tipText"></p>
+    </section>
+  </template>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="game.js"></script>
+</body>
+</html>
