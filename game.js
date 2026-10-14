@@ -37,11 +37,22 @@ const levels=[
   {type:'number',prompt:'The algorithm also keeps a running total. What total should it output?',code:'start = 5, step = 3, terms = 4\nOutputs: 5, 8, 11, 14\nAdd every output to total.',answer:'38',explain:'5 + 8 + 11 + 14 = 38.'}]}
 ];
 
-const state=JSON.parse(localStorage.getItem('pseudocodeQuest')||'{"scores":{},"xp":0}');
+let storageAvailable=true;
+let state={scores:{},xp:0};
+try{
+ const saved=window.localStorage.getItem('pseudocodeQuest');
+ if(saved)state=JSON.parse(saved);
+}catch(error){storageAvailable=false}
 let activeLevel=0,activeQuestion=0,currentAnswer=null,soundOn=true,locked=false;
 const app=document.querySelector('#app'),toast=document.querySelector('#toast');
 
-function save(){localStorage.setItem('pseudocodeQuest',JSON.stringify(state));updateHud()}
+function save(){
+ if(storageAvailable){
+  try{window.localStorage.setItem('pseudocodeQuest',JSON.stringify(state))}
+  catch(error){storageAvailable=false}
+ }
+ updateHud()
+}
 function stars(){return Object.values(state.scores).reduce((a,b)=>a+b,0)}
 function updateHud(){document.querySelector('#xpText').textContent=`${state.xp||0} XP`;document.querySelector('#starText').textContent=`${stars()}/27`}
 function ping(ok=true){if(!soundOn)return;try{const c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=ok?620:190;g.gain.setValueAtTime(.06,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.18);o.start();o.stop(c.currentTime+.18)}catch(e){}}
